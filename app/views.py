@@ -7,8 +7,9 @@ This file creates your application.
 
 from app import app
 import flask
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, flash, request, redirect, url_for
 from .forms import NewPropertiesForm
+import  random
 
 
 ###
@@ -27,17 +28,18 @@ def about():
     return render_template('about.html', name="Davian Wright")
 
 
-@app.route('/Property/', methods=['get', 'POST'])
+@app.route('/Property/', methods=['GET', 'POST'])
 def Property():
     """Render the websites New property page  """
     form = NewPropertiesForm()
-
+    propertyid= random.randint(0,100)
     if form.validate_on_submit():
         if request.method == 'POST':
-            flash(_("File uploaded."), "success")
+            
+            flash(("File uploaded."), "success")
         return redirect("/Properties/")
-
-    return render_template('properties.html',form=form,template="form-template")
+    
+    return render_template('properties.html',form=form,template="form-template",propertyid=propertyid)
 
 
 @app.route('/Properties/')
@@ -49,10 +51,10 @@ def Properties():
 
 
  
-#@app.route('/Property/<propertyid>')
-#def Property(propertyid):
+@app.route('/Property/<propertyid>')
+def Propertybyid(propertyid):
 
-#    return render_template('properties.html')
+    return render_template('propertybyid.html')
 
 
 ###
