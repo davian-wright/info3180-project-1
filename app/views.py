@@ -31,15 +31,29 @@ def about():
 def Property():
     """Render the websites New property page  """
     form = NewPropertiesForm()
+
     if form.validate_on_submit():
-        return redirect(url_for("success"))
+        if request.method == 'POST':
+            flash(_("File uploaded."), "success")
+        return redirect("/Properties/")
+
     return render_template('properties.html',form=form,template="form-template")
 
 
 @app.route('/Properties/')
 def Properties():
     """Render the websites properties page  """
-    return render_template('properties.html')
+    return render_template('property.html')
+
+
+
+
+ 
+#@app.route('/Property/<propertyid>')
+#def Property(propertyid):
+
+#    return render_template('properties.html')
+
 
 ###
 # The functions below should be applicable to all Flask apps.
